@@ -1,3 +1,5 @@
+import 'package:eduhome_project/constants/icon_constants.dart';
+import 'package:eduhome_project/constants/input_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -26,10 +28,9 @@ class _SignInState extends State<SignIn> {
 
   @override
   Widget build(BuildContext context) {
-    const IconData person_rounded =
-        IconData(0xf0071, fontFamily: 'MaterialIcons');
-    const IconData key_outlined =
-        IconData(0xf0624, fontFamily: 'MaterialIcons');
+    const IconData person_rounded = roundedPerson;
+    const IconData key_outlined = outlinedKey;
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
@@ -72,11 +73,7 @@ class _SignInState extends State<SignIn> {
             Container(
               height: 42,
               width: 322,
-              decoration: BoxDecoration(
-                color: Colors.grey[200],
-                border: Border.all(color: Colors.transparent),
-                borderRadius: BorderRadius.circular(50.0),
-              ),
+              decoration: containerDecoration,
               child: TextFormField(
                 validator: (value) {
                   //value = value.toString();
@@ -87,23 +84,11 @@ class _SignInState extends State<SignIn> {
                 },
                 cursorColor: Colors.grey[900],
                 controller: phoneEditingController,
-                decoration: InputDecoration(
+                decoration: inputDecoration.copyWith(
                   prefixIcon: Icon(
                     person_rounded,
                     color: Colors.grey[600],
                   ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(50.0),
-                    //borderSide: BorderSide(width: 3.0),
-                    borderSide: BorderSide.none,
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                      //<-- SEE HERE
-                      borderSide:
-                          BorderSide(width: 3, color: Colors.green.shade400),
-                      borderRadius: BorderRadius.circular(50.0)),
-
-                  // suffixIcon: Builder(builder: builder)
                 ),
               ),
             ),
@@ -126,11 +111,7 @@ class _SignInState extends State<SignIn> {
             Container(
               height: 42,
               width: 322,
-              decoration: BoxDecoration(
-                color: Colors.grey[200],
-                border: Border.all(color: Colors.transparent),
-                borderRadius: BorderRadius.circular(50.0),
-              ),
+              decoration: containerDecoration,
               child: TextFormField(
                 validator: (value) {
                   if (value == null || value.isEmpty || value.length < 6) {
@@ -141,21 +122,11 @@ class _SignInState extends State<SignIn> {
                 cursorColor: Colors.grey[900],
                 obscureText: _obscureText,
                 controller: passwordEditingController,
-                decoration: InputDecoration(
+                decoration: inputDecoration.copyWith(
                     prefixIcon: Icon(
                       key_outlined,
                       color: Colors.grey[600],
                     ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(50.0),
-                      //borderSide: BorderSide(width: 3.0),
-                      borderSide: BorderSide.none,
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                        //<-- SEE HERE
-                        borderSide:
-                            BorderSide(width: 3, color: Colors.green.shade400),
-                        borderRadius: BorderRadius.circular(50.0)),
                     suffixIcon: IconButton(
                       icon: Icon(
                         Icons.visibility,
