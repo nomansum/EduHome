@@ -6,3 +6,5 @@ const IconData arrowDropdown = IconData(0xee89, fontFamily: 'MaterialIcons');
 const IconData Location = IconData(0xe3ab, fontFamily: 'MaterialIcons');
 
 const IconData Mobile = IconData(0xe5c6, fontFamily: 'MaterialIcons');
+
+const IconData backArrowButton = IconData(0xe791, fontFamily: 'MaterialIcons');
