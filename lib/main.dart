@@ -1,5 +1,7 @@
 import 'package:eduhome_project/screens/authenticate/sign_in.dart';
 import 'package:eduhome_project/screens/authenticate/student_register.dart';
+import 'package:eduhome_project/screens/authenticate/teacher_register.dart';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: StudentRegister(),
+      home: TeacherRegister(),
     );
   }
 }
