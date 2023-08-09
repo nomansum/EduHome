@@ -8,3 +8,4 @@ const IconData Location = IconData(0xe3ab, fontFamily: 'MaterialIcons');
 const IconData Mobile = IconData(0xe5c6, fontFamily: 'MaterialIcons');
 
 const IconData backArrowButton = IconData(0xe791, fontFamily: 'MaterialIcons');
+ const IconData filter_alt_outlined = IconData(0xf068, fontFamily: 'MaterialIcons');
