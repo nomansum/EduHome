@@ -2,6 +2,7 @@ import 'package:eduhome_project/screens/authenticate/sign_in.dart';
 import 'package:eduhome_project/screens/authenticate/student_register.dart';
 import 'package:eduhome_project/screens/authenticate/teacher_register.dart';
 import 'package:eduhome_project/screens/home/teacher_home.dart';
+import 'package:eduhome_project/screens/pages/student_posts.dart';
 
 import 'package:flutter/material.dart';
 
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomePage(),
+      home: StudentPosts(),
        debugShowCheckedModeBanner: false,
     );
   }

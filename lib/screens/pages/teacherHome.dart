@@ -18,13 +18,13 @@ class _TeacherHomeState extends State<TeacherHome> {
  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
  
  List<Tuition> tuitionList = [
-  Tuition(id: "23sdf", preferredGender: "Male", daysInWeek: 4, salary: 9000, studentClass: "12" , subjects: "Phy,Math",address:"sylhet"),
+  Tuition(id: "23sdf", preferredGender: "Male", daysInWeek: 4, salary: 9000, studentClass: "12" , subjects: "Phy,Math",address:"sylhet" , booked: false),
 
-  Tuition(id: "23s23df", preferredGender: "FMale", daysInWeek: 4, salary: 9000, studentClass: "12",subjects: "Chem,Math",address:"amborkahan0"),
-  Tuition(id: "23sasdfdf", preferredGender: "FMale", daysInWeek: 4, salary: 9000, studentClass: "12",subjects: "Bio,Phy",address:"sylhet"),
-  Tuition(id: "23sdsdfaf", preferredGender: "FMale", daysInWeek: 4, salary: 9000, studentClass: "12",subjects: "Math",address:"sylhet"),
-  Tuition(id: "23sasdfdf", preferredGender: "FMale", daysInWeek: 4, salary: 9000, studentClass: "12" , subjects: "Organic",address:"sylhet"),
-  Tuition(id: "23asdfsdf", preferredGender: "FMale", daysInWeek: 4, salary: 9000, studentClass: "12",subjects: "C",address:"sylhet")
+  Tuition(id: "23s23df", preferredGender: "FMale", daysInWeek: 4, salary: 9000, studentClass: "12",subjects: "Chem,Math",address:"amborkahan0" , booked: true),
+  Tuition(id: "23sasdfdf", preferredGender: "FMale", daysInWeek: 4, salary: 9000, studentClass: "12",subjects: "Bio,Phy",address:"sylhet", booked: false),
+  Tuition(id: "23sdsdfaf", preferredGender: "FMale", daysInWeek: 4, salary: 9000, studentClass: "12",subjects: "Math",address:"sylhet",booked: true),
+  Tuition(id: "23sasdfdf", preferredGender: "FMale", daysInWeek: 4, salary: 9000, studentClass: "12" , subjects: "Organic",address:"sylhet",booked: false),
+  Tuition(id: "23asdfsdf", preferredGender: "FMale", daysInWeek: 4, salary: 9000, studentClass: "12",subjects: "C",address:"sylhet",booked: true)
 
 
  
@@ -145,6 +145,7 @@ class _TeacherHomeState extends State<TeacherHome> {
               cardHeight: 200, 
             
               cardWidth: 333,
+              
             
               child: Column(
                 children: [
