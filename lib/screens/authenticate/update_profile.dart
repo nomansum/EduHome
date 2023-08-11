@@ -1,39 +1,57 @@
 import 'package:eduhome_project/constants/dropdown_list.dart';
+import 'package:eduhome_project/constants/heading_textfield.dart';
+import 'package:eduhome_project/constants/icon_constants.dart';
+import 'package:eduhome_project/constants/input_decoration.dart';
+import 'package:eduhome_project/constants/profile.dart';
+import 'package:eduhome_project/widgets/back_button.dart';
 import 'package:eduhome_project/widgets/custom_dropdown.dart';
 import 'package:eduhome_project/widgets/teacher_subject_salary.dart';
+import 'package:eduhome_project/widgets/update_drop_down_field.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
-import '../../constants/heading_textfield.dart';
-import '../../constants/icon_constants.dart';
-import '../../constants/input_decoration.dart';
-import '../../widgets/back_button.dart';
+class UpdateProfile extends StatefulWidget {
 
-class TeacherRegister extends StatefulWidget {
-  const TeacherRegister({super.key});
+   UpdateProfile({super.key});
+
+        var userDetails = Profile(fullName: "Muntasir", gender: "Male", experiance: 2, location: "Chadpur", phn: "+88011545542", occupation: "Student", instituition: "SUST", minSalary: "30000", maxSalary: "50000" , subjects:"CSE");
+
 
   @override
-  State<TeacherRegister> createState() => _TeacherRegisterState();
+  State<UpdateProfile> createState() => _UpdateProfileState();
 }
 
-class _TeacherRegisterState extends State<TeacherRegister> {
-  final _formKey = GlobalKey<FormState>();
-  final nameEditingController = TextEditingController();
-  final classEditingController = TextEditingController();
-  final locationEditingController = TextEditingController();
-  final phoneEditingController = TextEditingController();
-  final passwordEditingController = TextEditingController();
-  String genderInput = "";
-  String experienceInput = "";
-  String occupationInput = "";
-  String instituteInput = "";
-  bool _obscureText = true;
-  bool isStudent = false;
+class _UpdateProfileState extends State<UpdateProfile> {
 
-  String minInput = "";
-  String maxInput = "";
-  String subjectInput = "";
+final _formKey = GlobalKey<FormState>();
+  late TextEditingController nameEditingController ;
+  final TextEditingController classEditingController =TextEditingController();
+  late TextEditingController locationEditingController;
+  late TextEditingController phoneEditingController ;
+  final TextEditingController passwordEditingController = TextEditingController() ;
+ 
+
+
+@override
+  void initState() {
+    nameEditingController = TextEditingController(text: widget.userDetails.fullName);
+     locationEditingController = TextEditingController(text: widget.userDetails.location);
+     phoneEditingController = TextEditingController(text: widget.userDetails.phn);
+    // TODO: implement initState
+    super.initState();
+
+  }
+late String fullName ="";// userDetails.fullName;
+  late String genderInput = "";//userDetails.gender;
+  late String experienceInput ="";// userDetails.experiance.toString();
+  late String occupationInput = "";//userDetails.occupation;
+  late String instituteInput = "";//userDetails.instituition;
+  late bool _obscureText = true;
+  late bool isStudent = true;//userDetails.occupation == "Student"?true:false;
+
+
+  late String minInput = "";//userDetails.minSalary;
+ late String maxInput = "";//userDetails.maxSalary;
+  late String subjectInput = "";//userDetails.subjects;
 
   void handleSubject(String value) {
     setState(() {
@@ -92,6 +110,15 @@ class _TeacherRegisterState extends State<TeacherRegister> {
 
   String _selectedItem = "";
 
+
+
+
+
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -103,24 +130,37 @@ class _TeacherRegisterState extends State<TeacherRegister> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                BackButtonWidget(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    TextButton(
+                          child: Text(
+                            '< Profile',
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontFamily: "Poppins",
+                                fontWeight: FontWeight.w800,
+                                color: Colors.black),
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                  ],
+                ),
                 SizedBox(
-                  height: 5,
+                  height: 10,
                 ),
-                Text(
-                  "One Step Away!",
-                  style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.w700,
-                      fontFamily: "Poppins"),
-                ),
-                Text(
-                  "Please Tell Us About You",
-                  style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      fontFamily: "Poppins"),
-                ),
+               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircleAvatar(
+                    minRadius: 50,
+              backgroundImage: NetworkImage(
+                  'https://images.unsplash.com/photo-1581382575275-97901c2635b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80'),
+            )
+                ],
+               ),
                 SizedBox(
                   height: 25,
                 ),
@@ -130,6 +170,7 @@ class _TeacherRegisterState extends State<TeacherRegister> {
                   width: 333,
                   decoration: containerDecoration,
                   child: TextFormField(
+                   // initialValue: fullName,
                     validator: (value) {
                       //value = value.toString();
                       if (value == null || value.isEmpty) {
@@ -168,7 +209,8 @@ class _TeacherRegisterState extends State<TeacherRegister> {
                               textAlign: TextAlign.left,
                             ),
                           ),
-                          CustomDropDownButton(
+                          CustomDropDownButton1(
+                            value: widget.userDetails.gender,
                             items: genderDropDownList.map((valueItem) {
                               return DropdownMenuItem(
                                 value: valueItem,
@@ -195,7 +237,8 @@ class _TeacherRegisterState extends State<TeacherRegister> {
                               textAlign: TextAlign.left,
                             ),
                           ),
-                          CustomDropDownButton(
+                          CustomDropDownButton1(
+                            value: "2",//widget.userDetails.experiance.toString(),
                             items: experienceDropdownList.map((valueItem) {
                               return DropdownMenuItem(
                                 value: valueItem,
@@ -325,7 +368,8 @@ class _TeacherRegisterState extends State<TeacherRegister> {
                               textAlign: TextAlign.left,
                             ),
                           ),
-                          CustomDropDownButton(
+                          CustomDropDownButton1(
+                            value:widget.userDetails.occupation,
                             items: occupationList.map((valueItem) {
                               return DropdownMenuItem(
                                 value: valueItem,
@@ -352,7 +396,8 @@ class _TeacherRegisterState extends State<TeacherRegister> {
                               textAlign: TextAlign.left,
                             ),
                           ),
-                          CustomDropDownButton(
+                          CustomDropDownButton1(
+                            value:widget.userDetails.instituition,
                             items: institutionList.map((valueItem) {
                               return DropdownMenuItem(
                                 value: valueItem,
@@ -392,7 +437,8 @@ class _TeacherRegisterState extends State<TeacherRegister> {
                                     textAlign: TextAlign.left,
                                   ),
                                 ),
-                                CustomDropDownButton(
+                                CustomDropDownButton1(
+                                  value: widget.userDetails.subjects,
                                   items: subjectList.map((valueItem) {
                                     return DropdownMenuItem(
                                       value: valueItem,
@@ -506,7 +552,7 @@ class _TeacherRegisterState extends State<TeacherRegister> {
                       }
                     },
                     child: Text(
-                      "Sign up",
+                      "UPDATE",
                       style: TextStyle(
                         fontFamily: "Poppins",
                         fontSize: 24,
@@ -518,32 +564,7 @@ class _TeacherRegisterState extends State<TeacherRegister> {
                 SizedBox(
                   height: 1,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Already have an account?",
-                      style: TextStyle(
-                        fontFamily: "Poppins",
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16,
-                      ),
-                    ),
-                    TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          "Sign In",
-                          style: TextStyle(
-                            color: Color(
-                                int.parse("#00CC99".substring(1, 7), radix: 16) +
-                                    0xFF000000),
-                            fontFamily: "Poppins",
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16,
-                          ),
-                        ))
-                  ],
-                )
+                
               ],
             ),
           ),
