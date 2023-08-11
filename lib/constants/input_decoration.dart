@@ -19,3 +19,19 @@ var containerDecoration = BoxDecoration(
   border: Border.all(color: Colors.transparent),
   borderRadius: BorderRadius.circular(50.0),
 );
+
+
+
+var normalDecoration = InputDecoration(
+  border: OutlineInputBorder(
+    borderRadius: BorderRadius.circular(20.0),
+    //borderSide: BorderSide(width: 3.0),
+    borderSide: BorderSide.none,
+  ),
+  focusedBorder: OutlineInputBorder(
+      //<-- SEE HERE
+      borderSide: BorderSide(width: 1, color: Colors.lightBlue.shade400),
+      borderRadius: BorderRadius.circular(20.0)),
+
+  // suffixIcon: Builder(builder: builder)
+);

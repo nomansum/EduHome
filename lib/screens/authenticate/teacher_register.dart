@@ -247,7 +247,7 @@ class _TeacherRegisterState extends State<TeacherRegister> {
                     validator: (value) {
                       //value = value.toString();
                       if (value == null || value.isEmpty) {
-                        return "please enter Your Location";
+                        return "please enter Your Phone Number";
                       }
                       return null;
                     },
