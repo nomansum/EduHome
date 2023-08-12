@@ -131,7 +131,7 @@ late String fullName ="";// userDetails.fullName;
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     TextButton(
                           child: Text(
@@ -146,6 +146,10 @@ late String fullName ="";// userDetails.fullName;
                             Navigator.pop(context);
                           },
                         ),
+                      IconButton(onPressed: (){
+                        //Carry Out Logout Action
+                      }, icon: Icon(IconData(0xe3b3, fontFamily: 'MaterialIcons')))
+
                   ],
                 ),
                 SizedBox(
