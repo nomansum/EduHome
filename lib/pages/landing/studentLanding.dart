@@ -1,30 +1,31 @@
-import 'package:eduhome_project/screens/pages/available_tuition.dart';
-import 'package:eduhome_project/screens/pages/teacher_my_students.dart';
-import 'package:eduhome_project/screens/pages/teacher_profile.dart';
-import 'package:eduhome_project/screens/pages/teacher_schedule.dart';
-import 'package:eduhome_project/screens/pages/teacherHome.dart';
 import 'package:flutter/material.dart';
+import 'package:eduhome_project/pages/student/studentPostTuition.dart';
+import 'package:eduhome_project/pages/student/studentHome.dart';
+import 'package:eduhome_project/pages/student/studentMyTutors.dart';
+import 'package:eduhome_project/pages/student/studentProfile.dart';
+import 'package:eduhome_project/pages/student/studentSchedule.dart';
 
-
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class StudentLandingPage extends StatefulWidget {
+  const StudentLandingPage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<StudentLandingPage> createState() => _StudentLandingPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _StudentLandingPageState extends State<StudentLandingPage> {
   int currentTab = 0;
   final List<Widget> screens = [
-    TeacherHome(),
-    TeacherSchedule()
+    studentHome(),
+    studentMyTutors(),
+    studentSchedule(),
+    studentSchedule()
   ];
 
   final PageStorageBucket bucket = PageStorageBucket();
 /*It acts as a storage mechanism for preserving the state of widgets 
 when navigating between routes or rebuilding the widget tree. */
 
-  Widget currentScreen = TeacherHome();
+  Widget currentScreen = studentHome();
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +37,8 @@ when navigating between routes or rebuilding the widget tree. */
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           setState(() {
-            currentScreen = AvailableTuition();
+            //  currentScreen = PostTuition();
+            currentScreen = TuitionPostPage();
             currentTab = 4;
           });
         },
@@ -63,7 +65,7 @@ when navigating between routes or rebuilding the widget tree. */
                     minWidth: 40,
                     onPressed: () {
                       setState(() {
-                        currentScreen = TeacherHome();
+                        currentScreen = studentHome();
                         currentTab = 0;
                       });
                     },
@@ -90,7 +92,7 @@ when navigating between routes or rebuilding the widget tree. */
                     minWidth: 40,
                     onPressed: () {
                       setState(() {
-                        currentScreen = TeacherMyStudents();
+                        currentScreen = studentMyTutors();
                         currentTab = 1;
                       });
                     },
@@ -103,7 +105,7 @@ when navigating between routes or rebuilding the widget tree. */
                               currentTab == 1 ? Color(0xFF00BFA5) : Colors.grey,
                         ),
                         Text(
-                          'MyStudents',
+                          'MyTutors',
                           style: TextStyle(
                             color: currentTab == 1
                                 ? Color(0xFF00BFA5)
@@ -129,7 +131,7 @@ when navigating between routes or rebuilding the widget tree. */
                     minWidth: 40,
                     onPressed: () {
                       setState(() {
-                        currentScreen = TeacherSchedule();
+                        currentScreen = studentSchedule();
                         currentTab = 2;
                       });
                     },
@@ -156,7 +158,7 @@ when navigating between routes or rebuilding the widget tree. */
                     minWidth: 40,
                     onPressed: () {
                       setState(() {
-                        currentScreen = TeacherProfile();
+                        currentScreen = UpdateStudentProfile();
                         currentTab = 3;
                       });
                     },

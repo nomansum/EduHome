@@ -2,26 +2,41 @@ import 'package:eduhome_project/constants/dropdown_list.dart';
 import 'package:eduhome_project/constants/heading_textfield.dart';
 import 'package:eduhome_project/constants/icon_constants.dart';
 import 'package:eduhome_project/constants/input_decoration.dart';
+import 'package:eduhome_project/constants/profile.dart';
+import 'package:eduhome_project/widgets/back_button.dart';
+import 'package:eduhome_project/widgets/custom_dropdown.dart';
+import 'package:eduhome_project/widgets/teacher_subject_salary.dart';
+import 'package:eduhome_project/widgets/update_drop_down_field.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../../widgets/back_button.dart';
+class UpdateStudentProfile extends StatefulWidget {
+  UpdateStudentProfile({super.key});
 
-class StudentRegister extends StatefulWidget {
-  const StudentRegister({super.key});
+  var userDetails = Profile(
+      fullName: "Muntasir",
+      gender: "Male",
+      experiance: 2,
+      location: "Chadpur",
+      phn: "+88011545542",
+      occupation: "Student",
+      instituition: "SUST",
+      minSalary: "30000",
+      maxSalary: "50000",
+      subjects: "CSE");
 
   @override
-  State<StudentRegister> createState() => _StudentRegisterState();
+  State<UpdateStudentProfile> createState() => _UpdateStudentProfileState();
 }
 
-class _StudentRegisterState extends State<StudentRegister> {
+class _UpdateStudentProfileState extends State<UpdateStudentProfile> {
   final _formKey = GlobalKey<FormState>();
   final nameEditingController = TextEditingController();
   final classEditingController = TextEditingController();
   final locationEditingController = TextEditingController();
   final phoneEditingController = TextEditingController();
   final passwordEditingController = TextEditingController();
+  final instituitionEditingController = TextEditingController();
   bool _obscureText = true;
   static const IconData arrow_drop_down_circle_outlined = arrowDropdown;
 
@@ -49,31 +64,37 @@ class _StudentRegisterState extends State<StudentRegister> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Center(
-            child: Form(
-          key: _formKey,
-          child: SingleChildScrollView(
+      body: Form(
+        key: _formKey,
+        child: SingleChildScrollView(
+          child: SafeArea(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                BackButtonWidget(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        //Carry Out Logout Action
+                      },
+                      icon: Icon(IconData(0xe3b3, fontFamily: 'MaterialIcons')),
+                      color: Colors.red,
+                    )
+                  ],
+                ),
                 SizedBox(
-                  height: 40,
+                  height: 25,
                 ),
-                Text(
-                  "One Step Away!",
-                  style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.w700,
-                      fontFamily: "Poppins"),
-                ),
-                Text(
-                  "Please Tell Us About You",
-                  style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      fontFamily: "Poppins"),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircleAvatar(
+                      minRadius: 50,
+                      backgroundImage: NetworkImage(
+                          'https://images.unsplash.com/photo-1581382575275-97901c2635b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80'),
+                    )
+                  ],
                 ),
                 SizedBox(
                   height: 25,
@@ -126,18 +147,35 @@ class _StudentRegisterState extends State<StudentRegister> {
                         });
                       },
                     )),
-                    controller: TextEditingController(text: _selectedItem ?? ''),
+                    controller:
+                        TextEditingController(text: _selectedItem ?? ''),
                   ),
                 ),
                 SizedBox(
                   height: 5,
                 ),
-        
-      
-      
-        
-      
-      
+                HeadingText(headingText: "Instituition"),
+                Container(
+                  height: 42,
+                  width: 333,
+                  decoration: containerDecoration,
+                  child: TextFormField(
+                    validator: (value) {
+                      //value = value.toString();
+                      if (value == null || value.isEmpty) {
+                        return "please enter Your Instituition";
+                      }
+                      return null;
+                    },
+                    cursorColor: Colors.grey[900],
+                    controller: instituitionEditingController,
+                    decoration: inputDecoration.copyWith(
+                        prefixIcon: Icon(
+                      Icons.house_outlined,
+                      color: Colors.grey[900],
+                    )),
+                  ),
+                ),
                 HeadingText(headingText: "Location"),
                 Container(
                   height: 42,
@@ -245,7 +283,7 @@ class _StudentRegisterState extends State<StudentRegister> {
                       }
                     },
                     child: Text(
-                      "Sign up",
+                      "Update",
                       style: TextStyle(
                         fontFamily: "Poppins",
                         fontSize: 24,
@@ -257,36 +295,10 @@ class _StudentRegisterState extends State<StudentRegister> {
                 SizedBox(
                   height: 10,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Already have an account?",
-                      style: TextStyle(
-                        fontFamily: "Poppins",
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16,
-                      ),
-                    ),
-                    TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          "Sign In",
-                          style: TextStyle(
-                            color: Color(
-                                int.parse("#00CC99".substring(1, 7), radix: 16) +
-                                    0xFF000000),
-                            fontFamily: "Poppins",
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16,
-                          ),
-                        ))
-                  ],
-                )
               ],
             ),
           ),
-        )),
+        ),
       ),
     );
   }

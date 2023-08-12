@@ -1,7 +1,6 @@
 import 'package:eduhome_project/constants/dropdown_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 import '../constants/icon_constants.dart';
 import '../constants/input_decoration.dart';
@@ -61,6 +60,5 @@ class _SubjectSalaryState extends State<SubjectSalary> {
         }).toList(),
       ),
     );
-    ;
   }
 }

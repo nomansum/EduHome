@@ -3,16 +3,17 @@ import 'package:eduhome_project/constants/icon_constants.dart';
 import 'package:eduhome_project/constants/input_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:eduhome_project/pages/authenticate/teacher_register.dart';
+import 'package:eduhome_project/pages/landing/teacherLanding.dart';
 
-class SignIn extends StatefulWidget {
-  const SignIn({super.key});
+class SignInTeacher extends StatefulWidget {
+  const SignInTeacher({super.key});
 
   @override
-  State<SignIn> createState() => _SignInState();
+  State<SignInTeacher> createState() => _SignInTeacherState();
 }
 
-class _SignInState extends State<SignIn> {
+class _SignInTeacherState extends State<SignInTeacher> {
   final phoneEditingController = TextEditingController();
   final passwordEditingController = TextEditingController();
   bool _obscureText = true;
@@ -142,6 +143,12 @@ class _SignInState extends State<SignIn> {
                         const SnackBar(content: Text('Done')),
                       );
                     }
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => TeacherLandingPage(),
+                      ),
+                    );
                   },
                   child: Text(
                     "Sign In",
@@ -168,7 +175,14 @@ class _SignInState extends State<SignIn> {
                     ),
                   ),
                   TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => TeacherRegister(),
+                          ),
+                        );
+                      },
                       child: Text(
                         "Sign Up",
                         style: TextStyle(
