@@ -8,6 +8,8 @@ import 'package:eduhome_project/widgets/custom_dropdown.dart';
 import 'package:eduhome_project/widgets/teacher_subject_salary.dart';
 import 'package:eduhome_project/widgets/update_drop_down_field.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 
 class UpdateProfile extends StatefulWidget {
 
@@ -25,6 +27,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
 final _formKey = GlobalKey<FormState>();
   late TextEditingController nameEditingController ;
   final TextEditingController classEditingController =TextEditingController();
+  final teachesEditingController = TextEditingController();
   late TextEditingController locationEditingController;
   late TextEditingController phoneEditingController ;
   final TextEditingController passwordEditingController = TextEditingController() ;
@@ -282,6 +285,33 @@ late String fullName ="";// userDetails.fullName;
                     )),
                   ),
                 ),
+             SizedBox(
+                  height: 5,
+                ),
+                HeadingText(headingText: "Teaches"),
+                Container(
+                  height: 50,
+                  width: 333,
+                  decoration: containerDecoration,
+                  child: TextFormField(
+                    validator: (value) {
+                      //value = value.toString();
+                      if (value == null || value.isEmpty) {
+                        return "please enter the subjects you teach";
+                      }
+                      return null;
+                    },
+                    cursorColor: Colors.grey[900],
+                    controller: teachesEditingController,
+                    decoration: inputDecoration.copyWith(
+                        prefixIcon:Icon(Icons.book_rounded,
+                        color: Colors.grey,)
+                        
+                         ),
+                  ),
+                ),
+
+
                 SizedBox(
                   height: 5,
                 ),
