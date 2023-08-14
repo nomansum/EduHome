@@ -50,6 +50,12 @@ dev_dependencies:
   google_fonts: ^5.1.0
   awesome_dialog: ^2.2.1
   table_calendar: ^3.0.9
+  get: ^4.6.5
+  liquid_swipe: ^3.0.0
+  smooth_page_indicator: ^1.0.0+2
+  flutter_otp_text_field: ^1.1.1
+  firebase_core: ^2.6.0
+  firebase_auth: ^4.2.7
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

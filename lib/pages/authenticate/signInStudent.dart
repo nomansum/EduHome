@@ -1,10 +1,13 @@
 import 'package:eduhome_project/constants/heading_textfield.dart';
 import 'package:eduhome_project/constants/icon_constants.dart';
 import 'package:eduhome_project/constants/input_decoration.dart';
+import 'package:eduhome_project/pages/authenticate/methods/forgot_password_model_button_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:eduhome_project/pages/authenticate/student_register.dart';
 import 'package:eduhome_project/pages/landing/studentLanding.dart';
+
+import '../../widgets/forgot_password_button.dart';
 
 class SignInStudent extends StatefulWidget {
   const SignInStudent({super.key});
@@ -14,7 +17,7 @@ class SignInStudent extends StatefulWidget {
 }
 
 class _SignInStudentState extends State<SignInStudent> {
-  final phoneEditingController = TextEditingController();
+  final emailEditingController = TextEditingController();
   final passwordEditingController = TextEditingController();
   bool _obscureText = true;
   final _formKey = GlobalKey<FormState>();
@@ -24,7 +27,7 @@ class _SignInStudentState extends State<SignInStudent> {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    phoneEditingController.dispose();
+    emailEditingController.dispose();
     passwordEditingController.dispose();
   }
 
@@ -60,7 +63,7 @@ class _SignInStudentState extends State<SignInStudent> {
               SizedBox(
                 height: 40,
               ),
-              HeadingText(headingText: "Phone Number"),
+              HeadingText(headingText: "E-mail"),
               Container(
                 height: 42,
                 width: 322,
@@ -69,15 +72,15 @@ class _SignInStudentState extends State<SignInStudent> {
                   validator: (value) {
                     //value = value.toString();
                     if (value == null || value.isEmpty) {
-                      return "please enter phone number";
+                      return "please enter E-Mail";
                     }
                     return null;
                   },
                   cursorColor: Colors.grey[900],
-                  controller: phoneEditingController,
+                  controller: emailEditingController,
                   decoration: inputDecoration.copyWith(
                     prefixIcon: Icon(
-                      person_rounded,
+                      Icons.phone_android_rounded,
                       color: Colors.grey[600],
                     ),
                   ),
@@ -124,9 +127,42 @@ class _SignInStudentState extends State<SignInStudent> {
                       ),
                 ),
               ),
-              SizedBox(
-                height: 20,
-              ),
+          
+
+   Container(
+    width: 322,
+     child: Align(
+                   alignment: Alignment.centerRight,
+                   child: TextButton(onPressed: (){
+              
+                 ForgetPasswordScreen.buildShowModalBottomSheet(context);
+
+
+
+                   },
+                   
+                    child: const Text("Forgot Password?",
+                    style: TextStyle(
+                      fontFamily: "Poppins",
+                      fontWeight: FontWeight.w500,
+                      fontSize: 18,
+                      color: Colors.black,
+                      decoration: TextDecoration.underline
+                    ),
+                    )
+                    
+                    ),
+                   ),
+   ),  
+
+
+
+
+
+
+
+
+
               Container(
                 width: 322,
                 height: 42,
@@ -202,4 +238,7 @@ class _SignInStudentState extends State<SignInStudent> {
       )),
     );
   }
+
+ 
 }
+

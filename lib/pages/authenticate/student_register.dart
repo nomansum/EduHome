@@ -2,13 +2,14 @@ import 'package:eduhome_project/constants/dropdown_list.dart';
 import 'package:eduhome_project/constants/heading_textfield.dart';
 import 'package:eduhome_project/constants/icon_constants.dart';
 import 'package:eduhome_project/constants/input_decoration.dart';
+import 'package:eduhome_project/services/authenticate/controllers/signup_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:eduhome_project/pages/authenticate/signInStudent.dart';
 import 'package:eduhome_project/pages/landing/studentLanding.dart';
 
 import '../../widgets/back_button.dart';
-
+import 'package:get/get.dart';
 class StudentRegister extends StatefulWidget {
   const StudentRegister({super.key});
 
@@ -18,12 +19,10 @@ class StudentRegister extends StatefulWidget {
 
 class _StudentRegisterState extends State<StudentRegister> {
   final _formKey = GlobalKey<FormState>();
-  final nameEditingController = TextEditingController();
-  final classEditingController = TextEditingController();
-  final locationEditingController = TextEditingController();
-  final phoneEditingController = TextEditingController();
-  final passwordEditingController = TextEditingController();
+ final controller = Get.put(SignUpController());
+
   bool _obscureText = true;
+
   static const IconData arrow_drop_down_circle_outlined = arrowDropdown;
 
   static const IconData location_on = Location;
@@ -40,11 +39,7 @@ class _StudentRegisterState extends State<StudentRegister> {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    nameEditingController.dispose();
-    classEditingController.dispose();
-    locationEditingController.dispose();
-    phoneEditingController.dispose();
-    passwordEditingController.dispose();
+   
   }
 
   @override
@@ -92,10 +87,39 @@ class _StudentRegisterState extends State<StudentRegister> {
                     return null;
                   },
                   cursorColor: Colors.grey[900],
-                  controller: nameEditingController,
+                  controller: controller.fullName,
                   decoration: inputDecoration,
                 ),
               ),
+             
+SizedBox(
+                height: 25,
+              ),
+              HeadingText(headingText: "E-Mail"),
+              Container(
+                height: 42,
+                width: 333,
+                decoration: containerDecoration,
+                child: TextFormField(
+                  validator: (value) {
+                    //value = value.toString();
+                    if (value == null || value.isEmpty) {
+                      return "please enter E-Mail";
+                    }
+                    return null;
+                  },
+                  cursorColor: Colors.grey[900],
+                  controller: controller.email,
+                  decoration: inputDecoration,
+                ),
+              ),
+
+
+
+
+
+
+
               SizedBox(
                 height: 5,
               ),
@@ -123,10 +147,11 @@ class _StudentRegisterState extends State<StudentRegister> {
                     onSelected: (String selectedItem) {
                       setState(() {
                         _selectedItem = selectedItem;
+                        controller.classNo.text = _selectedItem;
                       });
                     },
                   )),
-                  controller: TextEditingController(text: _selectedItem ?? ''),
+                  controller: controller.classNo,
                 ),
               ),
               SizedBox(
@@ -146,7 +171,7 @@ class _StudentRegisterState extends State<StudentRegister> {
                     return null;
                   },
                   cursorColor: Colors.grey[900],
-                  controller: locationEditingController,
+                  controller: controller.location,
                   decoration: inputDecoration.copyWith(
                       prefixIcon: Icon(
                     location_on,
@@ -171,7 +196,7 @@ class _StudentRegisterState extends State<StudentRegister> {
                     return null;
                   },
                   cursorColor: Colors.grey[900],
-                  controller: phoneEditingController,
+                  controller: controller.phoneNo,
                   decoration: inputDecoration.copyWith(
                       prefixIcon: Icon(
                     smartphone,
@@ -195,7 +220,7 @@ class _StudentRegisterState extends State<StudentRegister> {
                     return null;
                   },
                   cursorColor: Colors.grey[900],
-                  controller: passwordEditingController,
+                  controller: controller.password,
                   obscureText: _obscureText,
                   decoration: inputDecoration.copyWith(
                       prefixIcon: Icon(
@@ -233,6 +258,10 @@ class _StudentRegisterState extends State<StudentRegister> {
                           borderRadius: BorderRadius.circular(50.0))),
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
+
+                      try{
+                         SignUpController.instance.registerUser(controller.email.text.trim(), controller.password.text.trim());
+
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('Done')),
                       );
@@ -242,6 +271,17 @@ class _StudentRegisterState extends State<StudentRegister> {
                           builder: (context) => StudentLandingPage(),
                         ),
                       );
+
+                      }
+                      catch(e){
+
+                        ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('You Messed Up With Credentials!!! Try Again...')),
+                      );
+
+                      }
+                    
+                   
                     }
                   },
                   child: Text(
