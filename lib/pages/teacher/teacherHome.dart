@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../widgets/my_drawer.dart';
+import 'package:get/get.dart';
 
 class TeacherHome extends StatefulWidget {
   const TeacherHome({super.key});
@@ -112,12 +113,7 @@ class _TeacherHomeState extends State<TeacherHome> {
             padding: const EdgeInsets.all(8.0),
             child: IconButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => teacherNotification(),
-                  ),
-                );
+                Get.to(()=>teacherNotification());
               },
               icon: Icon(Icons.notifications_active_outlined),
               color: Colors.black,

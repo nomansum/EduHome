@@ -13,9 +13,7 @@ const dropDownList = [
   '10',
   '11',
   '12',
-  'Other',
-  'Alim',
-  'Dawra'
+  'Above'
 ];
 
 const genderDropDownList = ['Male', 'Female'];

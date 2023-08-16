@@ -54,18 +54,7 @@ if(user!.emailVerified){
 
 }
 
-void manuallCheckEmailVerificationStatus(){
 
-  final user = AuthenticationRepository.instance.getCurrentUser();
-
-  if(user!.emailVerified){
-    AuthenticationRepository.instance.setInitialScreen(user);
-
-  }
-
-else {}
-
-}
 
 
 
