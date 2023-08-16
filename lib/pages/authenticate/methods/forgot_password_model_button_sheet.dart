@@ -36,7 +36,7 @@ const SizedBox(height: 30,),
 ForgotPasswordBtnWidget(
  onTap: (){
 
-Get.to(()=> const ForgotPasswordMailScreen());
+Get.to(()=>  ForgotPasswordMailScreen());
   //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>ForgotPasswordMailScreen()));
    // Navigator.push(context, MaterialPageRoute(builder:(context)=> ForgotPasswordMailScreen()));
  },

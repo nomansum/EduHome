@@ -1,6 +1,7 @@
 
 
 
+import 'package:eduhome_project/services/authenticate/controllers/otp_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 
@@ -8,7 +9,7 @@ class OTPScreen extends StatelessWidget {
    OTPScreen({super.key});
 
   var credential = "albqkx@gmail.com";
-
+  var otp;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -59,7 +60,14 @@ class OTPScreen extends StatelessWidget {
             fillColor: Colors.black.withOpacity(0.1),
             filled: true,
             onSubmit: (code){
-              print("verification code : " + code.toString());
+               
+
+               otp = code;
+
+               OTPController.instance.verifyOTP(otp);
+
+
+
             },
 
           ),
@@ -76,7 +84,9 @@ class OTPScreen extends StatelessWidget {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50.0))),
                     onPressed: () {
-                      
+
+                OTPController.instance.verifyOTP(otp);
+                
                      // Get.to(()=> OTPScreen());
 
                     },

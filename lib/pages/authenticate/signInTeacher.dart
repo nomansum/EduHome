@@ -1,11 +1,14 @@
 import 'package:eduhome_project/constants/heading_textfield.dart';
 import 'package:eduhome_project/constants/icon_constants.dart';
 import 'package:eduhome_project/constants/input_decoration.dart';
+import 'package:eduhome_project/pages/authenticate/methods/forgot_password_model_button_sheet.dart';
+import 'package:eduhome_project/services/authenticate/authentication_repository.dart';
+import 'package:eduhome_project/services/authenticate/controllers/teacher_signin_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:eduhome_project/pages/authenticate/teacher_register.dart';
 import 'package:eduhome_project/pages/landing/teacherLanding.dart';
-
+import 'package:get/get.dart';
 class SignInTeacher extends StatefulWidget {
   const SignInTeacher({super.key});
 
@@ -14,8 +17,9 @@ class SignInTeacher extends StatefulWidget {
 }
 
 class _SignInTeacherState extends State<SignInTeacher> {
-  final phoneEditingController = TextEditingController();
-  final passwordEditingController = TextEditingController();
+  
+   final controller = Get.put(TeacherSignInController());
+
   bool _obscureText = true;
   final _formKey = GlobalKey<FormState>();
   //final isPassword = false;
@@ -24,8 +28,7 @@ class _SignInTeacherState extends State<SignInTeacher> {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    phoneEditingController.dispose();
-    passwordEditingController.dispose();
+   
   }
 
   @override
@@ -60,7 +63,7 @@ class _SignInTeacherState extends State<SignInTeacher> {
               SizedBox(
                 height: 40,
               ),
-              HeadingText(headingText: "Phone Number"),
+              HeadingText(headingText: "E-Mail"),
               Container(
                 height: 42,
                 width: 322,
@@ -69,15 +72,15 @@ class _SignInTeacherState extends State<SignInTeacher> {
                   validator: (value) {
                     //value = value.toString();
                     if (value == null || value.isEmpty) {
-                      return "please enter phone number";
+                      return "please enter E-Mail";
                     }
                     return null;
                   },
                   cursorColor: Colors.grey[900],
-                  controller: phoneEditingController,
+                  controller: controller.emailValue,
                   decoration: inputDecoration.copyWith(
                     prefixIcon: Icon(
-                      person_rounded,
+                      Icons.mail_outline_rounded,
                       color: Colors.grey[600],
                     ),
                   ),
@@ -100,7 +103,7 @@ class _SignInTeacherState extends State<SignInTeacher> {
                   },
                   cursorColor: Colors.grey[900],
                   obscureText: _obscureText,
-                  controller: passwordEditingController,
+                  controller: controller.passwordValue,
                   decoration: inputDecoration.copyWith(
                       prefixIcon: Icon(
                         key_outlined,
@@ -124,6 +127,34 @@ class _SignInTeacherState extends State<SignInTeacher> {
                       ),
                 ),
               ),
+                 Container(
+    width: 322,
+     child: Align(
+                   alignment: Alignment.centerRight,
+                   child: TextButton(onPressed: (){
+
+                    AuthenticationRepository.instance.userType.value = "Tutor";
+              
+                 ForgetPasswordScreen.buildShowModalBottomSheet(context);
+
+
+
+                   },
+                   
+                    child: const Text("Forgot Password?",
+                    style: TextStyle(
+                      fontFamily: "Poppins",
+                      fontWeight: FontWeight.w500,
+                      fontSize: 18,
+                      color: Colors.black,
+                      decoration: TextDecoration.underline
+                    ),
+                    )
+                    
+                    ),
+                   ),
+   ),  
+
                              
 
 
@@ -142,16 +173,27 @@ class _SignInTeacherState extends State<SignInTeacher> {
                           borderRadius: BorderRadius.circular(50.0))),
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
+
+                     try {
+                                  
+                                  AuthenticationRepository.instance.userType.value = "Tutor";
+
+                                 TeacherSignInController.instance.signInTeacherWithEmailAndPassword(controller.emailValue.text.trim(),controller.passwordValue.text.trim());
+                                 
+
+
+                        }
+                    
+                    catch(e){
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Done')),
+                        const SnackBar(content: Text("Wrong Credentials!!!")),
                       );
+                    }    
+                  
+
+
                     }
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => TeacherLandingPage(),
-                      ),
-                    );
+                   
                   },
                   child: Text(
                     "Sign In",

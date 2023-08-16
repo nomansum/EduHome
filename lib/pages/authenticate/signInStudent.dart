@@ -2,13 +2,15 @@ import 'package:eduhome_project/constants/heading_textfield.dart';
 import 'package:eduhome_project/constants/icon_constants.dart';
 import 'package:eduhome_project/constants/input_decoration.dart';
 import 'package:eduhome_project/pages/authenticate/methods/forgot_password_model_button_sheet.dart';
+import 'package:eduhome_project/services/authenticate/authentication_repository.dart';
+import 'package:eduhome_project/services/authenticate/controllers/student_signin_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:eduhome_project/pages/authenticate/student_register.dart';
 import 'package:eduhome_project/pages/landing/studentLanding.dart';
 
 import '../../widgets/forgot_password_button.dart';
-
+import 'package:get/get.dart';
 class SignInStudent extends StatefulWidget {
   const SignInStudent({super.key});
 
@@ -17,8 +19,7 @@ class SignInStudent extends StatefulWidget {
 }
 
 class _SignInStudentState extends State<SignInStudent> {
-  final emailEditingController = TextEditingController();
-  final passwordEditingController = TextEditingController();
+  final controller = Get.put(StudentSignInController());
   bool _obscureText = true;
   final _formKey = GlobalKey<FormState>();
   //final isPassword = false;
@@ -27,8 +28,7 @@ class _SignInStudentState extends State<SignInStudent> {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    emailEditingController.dispose();
-    passwordEditingController.dispose();
+  
   }
 
   @override
@@ -77,10 +77,10 @@ class _SignInStudentState extends State<SignInStudent> {
                     return null;
                   },
                   cursorColor: Colors.grey[900],
-                  controller: emailEditingController,
+                  controller: controller.emailValue,
                   decoration: inputDecoration.copyWith(
                     prefixIcon: Icon(
-                      Icons.phone_android_rounded,
+                      Icons.email_rounded,
                       color: Colors.grey[600],
                     ),
                   ),
@@ -103,7 +103,7 @@ class _SignInStudentState extends State<SignInStudent> {
                   },
                   cursorColor: Colors.grey[900],
                   obscureText: _obscureText,
-                  controller: passwordEditingController,
+                  controller: controller.passwordValue,
                   decoration: inputDecoration.copyWith(
                       prefixIcon: Icon(
                         key_outlined,
@@ -134,6 +134,8 @@ class _SignInStudentState extends State<SignInStudent> {
      child: Align(
                    alignment: Alignment.centerRight,
                    child: TextButton(onPressed: (){
+
+                    AuthenticationRepository.instance.userType.value = "Student";
               
                  ForgetPasswordScreen.buildShowModalBottomSheet(context);
 
@@ -174,17 +176,30 @@ class _SignInStudentState extends State<SignInStudent> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50.0))),
                   onPressed: () {
+
+
                     if (_formKey.currentState!.validate()) {
+
+
+                        try {
+                                  
+                                  AuthenticationRepository.instance.userType.value = "student";
+
+                                 StudentSignInController.instance.signInStudentWithEmailAndPassword(controller.emailValue.text.trim(),controller.passwordValue.text.trim());
+
+
+
+                        }
+                    
+                    catch(e){
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Done')),
+                        const SnackBar(content: Text("Wrong Credentials!!!")),
                       );
                     }
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => StudentLandingPage(),
-                      ),
-                    );
+
+                      
+                    }
+                    
                   },
                   child: Text(
                     "Sign In",

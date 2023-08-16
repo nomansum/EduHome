@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:eduhome_project/pages/authenticate/signInStudent.dart';
 import 'package:eduhome_project/pages/authenticate/signInTeacher.dart';
-
+import 'package:get/get.dart';
 class landingPage extends StatelessWidget {
   const landingPage({super.key});
 
@@ -51,12 +51,7 @@ class landingPage extends StatelessWidget {
               padding: EdgeInsets.only(bottom: 150.0),
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SignInStudent(),
-                    ),
-                  );
+                 Get.to(()=>SignInStudent());
                 },
                 child: Text(
                   "Hire a Tutor",
@@ -89,12 +84,7 @@ class landingPage extends StatelessWidget {
               padding: EdgeInsets.only(bottom: 80.0),
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SignInTeacher(),
-                    ),
-                  );
+                  Get.to(()=>SignInTeacher());
                 },
                 child: Text(
                   "Become a Tutor",

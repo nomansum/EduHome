@@ -1,11 +1,28 @@
 import 'package:eduhome_project/constants/input_decoration.dart';
 import 'package:eduhome_project/pages/authenticate/otp_screen.dart';
+import 'package:eduhome_project/pages/authenticate/reset_student_email_sent_screen.dart';
+import 'package:eduhome_project/pages/authenticate/reset_tutor_email_sent_screen.dart';
+import 'package:eduhome_project/services/authenticate/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ForgotPasswordMailScreen extends StatelessWidget {
+class ForgotPasswordMailScreen extends StatefulWidget {
   const ForgotPasswordMailScreen({super.key});
 
+  @override
+  State<ForgotPasswordMailScreen> createState() => _ForgotPasswordMailScreenState();
+}
+
+class _ForgotPasswordMailScreenState extends State<ForgotPasswordMailScreen> {
+  
+  final emailValue = TextEditingController();
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    emailValue.dispose();
+  }
+  
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -65,7 +82,7 @@ class ForgotPasswordMailScreen extends StatelessWidget {
                             label: Text("E-Mail"),
                             hintText: "E-Mail"
                           ),
-    
+                     controller: emailValue,
     
     
                       
@@ -84,8 +101,18 @@ class ForgotPasswordMailScreen extends StatelessWidget {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50.0))),
                     onPressed: () {
-                      
-                      Get.to(()=> OTPScreen());
+                    //
+                    final userTypeValue = AuthenticationRepository.instance.userType.value.toString().toLowerCase();
+                     AuthenticationRepository.instance.resetPassword(emailValue.text.trim());
+                     if(userTypeValue == 'tutor'){
+                      Get.offAll(()=>ResetTutorEmailSentScreen(email: emailValue.text.trim()));
+
+                     }
+                     else {
+                      Get.offAll(()=>ResetStudentEmailSentScreen(email: emailValue.text.trim()));
+
+                     }
+
 
                     },
                     child: Text(
@@ -110,9 +137,7 @@ class ForgotPasswordMailScreen extends StatelessWidget {
     
                     
           
-                  ElevatedButton(onPressed: (){
-                    Navigator.pop(context);
-                  }, child: Text("Click"))
+               
             
             
             

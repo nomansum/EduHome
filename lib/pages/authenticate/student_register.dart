@@ -2,7 +2,10 @@ import 'package:eduhome_project/constants/dropdown_list.dart';
 import 'package:eduhome_project/constants/heading_textfield.dart';
 import 'package:eduhome_project/constants/icon_constants.dart';
 import 'package:eduhome_project/constants/input_decoration.dart';
-import 'package:eduhome_project/services/authenticate/controllers/signup_controller.dart';
+import 'package:eduhome_project/pages/authenticate/email_verification.dart';
+import 'package:eduhome_project/pages/authenticate/otp_screen.dart';
+import 'package:eduhome_project/services/authenticate/authentication_repository.dart';
+import 'package:eduhome_project/services/authenticate/controllers/student_signup_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:eduhome_project/pages/authenticate/signInStudent.dart';
@@ -257,20 +260,18 @@ SizedBox(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50.0))),
                   onPressed: () {
-                    if (_formKey.currentState!.validate()) {
+                    if (_formKey.currentState!.validate()){
 
                       try{
-                         SignUpController.instance.registerUser(controller.email.text.trim(), controller.password.text.trim());
+                            
+                         AuthenticationRepository.instance.userType.value = "Student";
 
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Done')),
-                      );
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => StudentLandingPage(),
-                        ),
-                      );
+                        SignUpController.instance.registerUser(controller.email.text.trim(), controller.password.text.trim());
+                      
+                       ScaffoldMessenger.of(context).showSnackBar(
+                         const SnackBar(content: Text('Done')),
+                       );
+                      
 
                       }
                       catch(e){
