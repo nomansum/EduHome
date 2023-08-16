@@ -259,12 +259,12 @@ SizedBox(
                               0xFF000000),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50.0))),
-                  onPressed: () {
+                  onPressed: () async{
                     if (_formKey.currentState!.validate()){
 
                       try{
                             
-                         AuthenticationRepository.instance.userType.value = "Student";
+                         AuthenticationRepository.instance.userType.value = "student";
 
                         SignUpController.instance.registerUser(controller.email.text.trim(), controller.password.text.trim());
                       

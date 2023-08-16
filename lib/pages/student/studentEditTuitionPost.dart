@@ -14,6 +14,8 @@ class _EditTuitionPostState extends State<EditTuitionPost> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final List<String> tuitionType = ["Offline", "Online"];
   final tuitionTypeController = TextEditingController();
+  
+  
   final List<String> classOfTuition = [
     '1',
     '2',

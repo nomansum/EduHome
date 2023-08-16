@@ -1,6 +1,8 @@
 
 //import 'dart:html';
 
+import 'dart:convert';
+
 import 'package:eduhome_project/pages/authenticate/email_verification.dart';
 import 'package:eduhome_project/pages/authenticate/signInStudent.dart';
 import 'package:eduhome_project/pages/landing/landingPage.dart';
@@ -9,7 +11,7 @@ import 'package:eduhome_project/pages/landing/teacherLanding.dart';
 import 'package:eduhome_project/pages/student/studentHome.dart';
 import 'package:eduhome_project/services/authenticate/signup_email_password_failure.dart';
 import 'package:get/get.dart';
-
+import 'package:http/http.dart' as http;
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthenticationRepository extends GetxController{
@@ -23,6 +25,7 @@ final _auth = FirebaseAuth.instance;
 late final Rx<User?> firebaseUser;
 var verificationId = ''.obs;
 var userType = ''.obs;
+var userActualType=''.obs;
 
 @override
 void onReady(){
@@ -54,6 +57,7 @@ setInitialScreen(User? user)async{
   
 final userTypeValue = userType.value.toString().toLowerCase();
 
+final userActualTypeValue = userActualType.value.toString().toLowerCase();
  
  
   
@@ -61,17 +65,19 @@ final userTypeValue = userType.value.toString().toLowerCase();
     Get.offAll(()=>landingPage());
   }
 
-  else if(user!.emailVerified && userTypeValue=="tutor"){
+  else if(user!.emailVerified && userTypeValue=="tutor" && userActualTypeValue=='tutor'){
      Get.offAll(()=>TeacherLandingPage());
   }
-  else if(user!.emailVerified && userTypeValue=="student"){
+  else if(user!.emailVerified && userTypeValue=="student" && userActualTypeValue=='student'){
         Get.offAll(()=>StudentLandingPage())   ; 
   }
   else if(user!.emailVerified == false ){
     Get.offAll(()=>EmailVerification());
   }
   else {
-    this.logout();
+
+   await AuthenticationRepository.instance.logout();
+   
     Get.offAll(()=>landingPage());
   }
 
@@ -83,7 +89,9 @@ final userTypeValue = userType.value.toString().toLowerCase();
 Future<void> loginUserWithEmailAndPassword(String email,String password)async{
  
   try{
+
     await _auth.signInWithEmailAndPassword(email: email, password: password);
+    await AuthenticationRepository.instance.getUserData(email);
 
   } on FirebaseAuthException catch(e){
     throw e.code;
@@ -114,7 +122,13 @@ Future<void> createUserWithEmailAndPassword(String email,String password) async{
    
     try{
 
+      final userTypeValue = userType.value.toString().toLowerCase();
+   
+       
+
+
       await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      await AuthenticationRepository.instance.sendUserData(email, userTypeValue);
 
 
     } on FirebaseAuthException catch(e){
@@ -174,6 +188,60 @@ catch(_){
 
 
 }
+
+Future<void> sendUserData(String email,String usertype) async {
+  final url = Uri.parse('http://192.168.176.62:4000/users/saveUserData'); 
+  final headers = <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',          };
+  final data = {'email': email, 'usertype': usertype}; 
+
+  try {
+    var response = await http.post(
+      url,
+      headers: headers,
+      body: jsonEncode(data),
+    );
+
+  } catch (e) {
+    print('Error: $e');
+  }
+}
+
+
+
+Future<void> getUserData(String email) async {
+  final url = Uri.parse('http://192.168.176.62:4000/users/getUserData'); 
+  final headers = <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',};
+  final data = {'email': email}; 
+
+  try {
+    var response = await http.post(
+      url,
+      headers: headers,
+      body: jsonEncode(data),
+    );
+    var   usType = jsonDecode(response.body)['usertype'];
+    AuthenticationRepository.instance.userActualType.value = usType;
+    
+
+  } catch (e) {
+    print('Error: $e');
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

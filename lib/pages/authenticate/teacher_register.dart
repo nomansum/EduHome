@@ -546,7 +546,7 @@ class _TeacherRegisterState extends State<TeacherRegister> {
                                 0xFF000000),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50.0))),
-                    onPressed: () {
+                    onPressed: () async{
                       
                       if (_formKey.currentState!.validate()) {
                       

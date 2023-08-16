@@ -20,7 +20,6 @@ void registerUser(String email,String password)async{
 
 await AuthenticationRepository.instance.createUserWithEmailAndPassword(email, password);
 
-
 ///all the datas are in the text field save these data in mongoDB
 
 final user = AuthenticationRepository.instance.getCurrentUser();

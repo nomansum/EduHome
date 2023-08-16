@@ -6,7 +6,7 @@ const userController = require('../controllers/userController')
 
 userRoute.post("/saveUserData",userController.saveUserData);
 
-userRoute.get("/getUserData",userController.getUserData);
+userRoute.post("/getUserData",userController.getUserData);
 
 
 module.exports = userRoute;
