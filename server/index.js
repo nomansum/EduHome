@@ -1,43 +1,32 @@
-
-
-const express = require('express');
-const mongoose = require('mongoose')
+const express = require("express");
+const mongoose = require("mongoose");
 const advertisementSchema = require("./models/Advertisement");
-const userSchema = require('./models/Users')
-const filterRouter = require('./routes/filterDataRoute');
-const userRoute = require('./routes/userRoute')
+const userSchema = require("./models/Users");
+const filterRouter = require("./routes/filterDataRoute");
+const userRoute = require("./routes/userRoute");
 const app = express();
 
- app.use(express.json())
-
+app.use(express.json());
 
 const PORT = 4000;
 
+const DB =
+  "mongodb+srv://albqkx:1921141425@eduhome.eskt5gx.mongodb.net/?retryWrites=true&w=majority";
+// "mongodb+srv://muntasirnahid87:8Re8vAReV4YpCDt8@eduhome.ik65e6g.mongodb.net/?retryWrites=true&w=majority";
+//"mongodb+srv://albqkx:1921141425@eduhome.eskt5gx.mongodb.net/?retryWrites=true&w=majority";
+app.get("/", async (req, res) => {
+  var advertisements = await advertisementSchema.find({});
+  res.status(200).json(advertisements);
+});
 
-const DB ="mongodb+srv://muntasirnahid87:8Re8vAReV4YpCDt8@eduhome.ik65e6g.mongodb.net/?retryWrites=true&w=majority";
+app.use("/filter", filterRouter);
 
-app.get("/",async(req,res)=>{
-    let data = await userSchema.deleteMany({})
-    res.json(data);
-})
+app.use("/users", userRoute);
 
-app.use('/filter',filterRouter);
+mongoose.connect(DB).then(() => {
+  console.log("Connected To DB");
+});
 
-app.use("/users",userRoute);
-
-
-
-
-
-mongoose.connect(DB).then(()=>{
-    console.log("Connected To DB");
-})
-
-
-
-
-
-
-app.listen(PORT,()=>{
-    console.log(`connected at port ${PORT}`);
-})
+app.listen(PORT, () => {
+  console.log(`connected at port ${PORT}`);
+});

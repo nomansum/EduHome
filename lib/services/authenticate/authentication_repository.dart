@@ -1,8 +1,8 @@
-
 //import 'dart:html';
 
 import 'dart:convert';
 
+import 'package:eduhome_project/constants/custom_exception.dart';
 import 'package:eduhome_project/pages/authenticate/email_verification.dart';
 import 'package:eduhome_project/pages/authenticate/signInStudent.dart';
 import 'package:eduhome_project/pages/landing/landingPage.dart';
@@ -14,282 +14,207 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:firebase_auth/firebase_auth.dart';
 
-class AuthenticationRepository extends GetxController{
+class AuthenticationRepository extends GetxController {
+  static AuthenticationRepository get instance => Get.find();
 
-static AuthenticationRepository get instance => Get.find();
+  final _auth = FirebaseAuth.instance;
 
+  late final Rx<User?> firebaseUser;
+  var verificationId = ''.obs;
+  var userType = ''.obs;
+  var userActualType = ''.obs;
 
+  @override
+  void onReady() {
+    firebaseUser = Rx<User?>(_auth.currentUser);
 
-final _auth = FirebaseAuth.instance;
+    // print(_auth.currentUser?.email);
 
-late final Rx<User?> firebaseUser;
-var verificationId = ''.obs;
-var userType = ''.obs;
-var userActualType=''.obs;
-
-@override
-void onReady(){
-  firebaseUser = Rx<User?>(_auth.currentUser);
-
- // print(_auth.currentUser?.email);
-
-firebaseUser.bindStream(_auth.userChanges());
+    firebaseUser.bindStream(_auth.userChanges());
 
 //setInitialScreen(_auth.currentUser);
-
-
-
-}
-
-void authReload(){
-  _auth.currentUser?.reload();
-}
-
-User? getCurrentUser(){
-  
-  return _auth.currentUser;
-
-}
-
-
-setInitialScreen(User? user)async{
-
-  
-final userTypeValue = userType.value.toString().toLowerCase();
-
-final userActualTypeValue = userActualType.value.toString().toLowerCase();
- 
- 
-  
-  if(user==null){
-    Get.offAll(()=>landingPage());
   }
 
-  else if(user!.emailVerified && userTypeValue=="tutor" && userActualTypeValue=='tutor'){
-     Get.offAll(()=>TeacherLandingPage());
-  }
-  else if(user!.emailVerified && userTypeValue=="student" && userActualTypeValue=='student'){
-        Get.offAll(()=>StudentLandingPage())   ; 
-  }
-  else if(user!.emailVerified == false ){
-    Get.offAll(()=>EmailVerification());
-  }
-  else {
-
-   await AuthenticationRepository.instance.logout();
-   
-    Get.offAll(()=>landingPage());
+  void authReload() {
+    _auth.currentUser?.reload();
   }
 
-
-
-}
-
-
-Future<void> loginUserWithEmailAndPassword(String email,String password)async{
- 
-  try{
-
-    await _auth.signInWithEmailAndPassword(email: email, password: password);
-    await AuthenticationRepository.instance.getUserData(email);
-
-  } on FirebaseAuthException catch(e){
-    throw e.code;
-  }
-  catch (e){
-    throw e;
+  User? getCurrentUser() {
+    return _auth.currentUser;
   }
 
-}
-Future<void> resetPassword(String email)async{
+  setInitialScreen(User? user) async {
+    final userTypeValue = userType.value.toString().toLowerCase();
 
-try{
-    await _auth.sendPasswordResetEmail(email: email);
+    final userActualTypeValue = userActualType.value.toString().toLowerCase();
 
-}
-catch(e){
+    if (user == null) {
+      Get.offAll(() => landingPage());
+    } else if (user!.emailVerified &&
+        userTypeValue == "tutor" &&
+        userActualTypeValue == 'tutor') {
+      Get.offAll(() => TeacherLandingPage());
+    } else if (user!.emailVerified &&
+        userTypeValue == "student" &&
+        userActualTypeValue == 'student') {
+      Get.offAll(() => StudentLandingPage());
+    } else if (user!.emailVerified == false) {
+      Get.offAll(() => EmailVerification());
+    } else {
+      await AuthenticationRepository.instance.logout();
 
-  print("Password Reset Failed!");
-
-    throw e;
-}
-
-
-}
-
-
-Future<void> createUserWithEmailAndPassword(String email,String password) async{
-   
-    try{
-
-      final userTypeValue = userType.value.toString().toLowerCase();
-   
-       
-
-
-      await _auth.createUserWithEmailAndPassword(email: email, password: password);
-      await AuthenticationRepository.instance.sendUserData(email, userTypeValue);
-
-
-    } on FirebaseAuthException catch(e){
-    
-    final ex = SignUpWithEmailAndPasswordFailure.code(e.code);
-    print('FIREBASE AUTH EXCEPTION - ${ex.message}');
-
-    throw ex;
-
-
+      Get.offAll(() => landingPage());
     }
-    catch(e){
-   
-   const ex = SignUpWithEmailAndPasswordFailure();
+  }
 
-   print("EXCEPTION - ${ex.message}");
-   throw ex;
-
-    }
- 
-
-}
-
-Future<void> loginWithEmailAndPassword(String email,String password) async{
-   
-    try{
-
+  Future<void> loginUserWithEmailAndPassword(
+      String email, String password) async {
+    try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
-      
+      await AuthenticationRepository.instance.getUserData(email);
+    } on FirebaseAuthException catch (e) {
+      switch (e.code) {
+        case 'user-not-found':
+          throw CustomException('User not found. Please check the email.');
 
-    } on FirebaseAuthException catch(e){
-         throw e;
+        case 'wrong-password':
+          throw CustomException('Incorrect password. Please try again.');
+
+        case 'email-already-in-use':
+          throw CustomException('Email address is already in use.');
+        case 'invalid-email':
+          throw CustomException("Invalid Email");
+
+        default:
+          throw CustomException('An error occurred: ${e.message}');
+      }
+      //throw e;
+    } catch (e) {
+      throw e;
     }
-    catch(e){
-    throw e;
+  }
+
+  Future<void> resetPassword(String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+    } catch (e) {
+      print("Password Reset Failed!");
+
+      throw e;
     }
- 
-
-}
-
-Future<void> sendEmailVerification()async{
- 
-   try{
-     await  _auth.currentUser?.sendEmailVerification();
-
-   }on FirebaseAuthException catch (e){
-    final ex = e.code;
-    throw ex;
-   }
-catch(_){
-   
-   throw _;
-
-
-
-}
-
-
-}
-
-Future<void> sendUserData(String email,String usertype) async {
-  final url = Uri.parse('http://192.168.176.62:4000/users/saveUserData'); 
-  final headers = <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',          };
-  final data = {'email': email, 'usertype': usertype}; 
-
-  try {
-    var response = await http.post(
-      url,
-      headers: headers,
-      body: jsonEncode(data),
-    );
-
-  } catch (e) {
-    print('Error: $e');
   }
-}
 
+  Future<void> createUserWithEmailAndPassword(
+      String email, String password) async {
+    try {
+      final userTypeValue = userType.value.toString().toLowerCase();
 
+      await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      await AuthenticationRepository.instance
+          .sendUserData(email, userTypeValue);
+    } on FirebaseAuthException catch (e) {
+      final ex = SignUpWithEmailAndPasswordFailure.code(e.code);
+      print('FIREBASE AUTH EXCEPTION - ${ex.message}');
 
-Future<void> getUserData(String email) async {
-  final url = Uri.parse('http://192.168.176.62:4000/users/getUserData'); 
-  final headers = <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',};
-  final data = {'email': email}; 
+      throw ex;
+    } catch (e) {
+      const ex = SignUpWithEmailAndPasswordFailure();
 
-  try {
-    var response = await http.post(
-      url,
-      headers: headers,
-      body: jsonEncode(data),
-    );
-    var   usType = jsonDecode(response.body)['usertype'];
-    AuthenticationRepository.instance.userActualType.value = usType;
-    
-
-  } catch (e) {
-    print('Error: $e');
+      print("EXCEPTION - ${ex.message}");
+      throw ex;
+    }
   }
-}
 
+  Future<void> sendEmailVerification() async {
+    try {
+      await _auth.currentUser?.sendEmailVerification();
+    } on FirebaseAuthException catch (e) {
+      final ex = e.code;
+      throw ex;
+    } catch (_) {
+      throw _;
+    }
+  }
 
+  Future<void> sendUserData(String email, String usertype) async {
+    final url = Uri.parse('http://10.200.31.104:4000/users/saveUserData');
+    final headers = <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    };
+    final data = {'email': email, 'usertype': usertype};
 
+    try {
+      var response = await http.post(
+        url,
+        headers: headers,
+        body: jsonEncode(data),
+      );
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
 
+  Future<void> getUserData(String email) async {
+    final url = Uri.parse('http://10.200.31.104:4000/users/getUserData');
+    final headers = <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    };
+    final data = {'email': email};
 
+    try {
+      var response = await http.post(
+        url,
+        headers: headers,
+        body: jsonEncode(data),
+      );
 
+      if (response.statusCode == 200) {
+        var responseData = jsonDecode(response.body);
+        var usType = responseData[0]['usertype'];
 
+        if (usType != null) {
+          AuthenticationRepository.instance.userActualType.value =
+              usType.toString();
+        } else {
+          print('Error: "usertype" field missing in response.');
+        }
+      } else {
+        print('Error: Request failed with status ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
 
+  Future<void> phoneAuthentication(String phoneNo) async {
+    await _auth.verifyPhoneNumber(
+        phoneNumber: phoneNo,
+        verificationCompleted: (credential) async {
+          await _auth.signInWithCredential(credential);
+        },
+        verificationFailed: (e) {
+          if (e.code == 'invalid-phone-number') {
+            Get.snackbar('Error', "The Provided Phone Number is not valid");
+          } else {
+            Get.snackbar("Error", "Something went wrong");
+          }
+        },
+        codeSent: (verificationId, resendToken) {
+          this.verificationId.value = verificationId;
+        },
+        codeAutoRetrievalTimeout: (verificationId) {
+          this.verificationId.value = verificationId;
+        });
+  }
 
+  Future<bool> verifyOTP(String otp) async {
+    var credentials = await _auth.signInWithCredential(
+        PhoneAuthProvider.credential(
+            verificationId: verificationId.value, smsCode: otp));
 
+    return credentials.user != null ? true : false;
+  }
 
-
-
-
-
-
-Future<void> phoneAuthentication(String phoneNo)async{
-
-
-await _auth.verifyPhoneNumber(
-  phoneNumber: phoneNo,
-  verificationCompleted: (credential)async{
-  await _auth.signInWithCredential(credential);
-  },
-   verificationFailed: (e){
-       if(e.code == 'invalid-phone-number'){
-          Get.snackbar('Error',"The Provided Phone Number is not valid");
-       }
-       else {
-        Get.snackbar("Error", "Something went wrong");
-       }
-   }, 
-   codeSent: (verificationId,resendToken){
-    this.verificationId.value = verificationId;
-
-   }, 
-   codeAutoRetrievalTimeout: (verificationId){
-       this.verificationId.value = verificationId;
-   }
-   );
-
-
-}
-
-Future<bool> verifyOTP(String otp) async {
-
-    var credentials = await _auth.signInWithCredential(PhoneAuthProvider.credential(verificationId: verificationId.value, smsCode: otp));
-
-return credentials.user !=null?true:false;
-
-}
-
-
-
-
-
-
-
-Future<void> logout() async => await _auth.signOut();
-
-
-
-
+  Future<void> logout() async => await _auth.signOut();
 }
