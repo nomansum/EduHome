@@ -26,7 +26,7 @@ const teacherSchema = new Schema({
   email: {
     type: String,
     required: true,
-    max: 20,
+    unique: true,
   },
   phoneNumber: {
     type: String,

@@ -52,9 +52,39 @@ const saveTeacherData = async (req, res) => {
   }
 };
 
+const updateTeacherProfile = async (req, res) => {
+  try {
+    const { id, ...data } = req.body;
+
+    await teacherSchema.findByIdAndUpdate(id, data);
+
+    const response = await teacherSchema.findById(id);
+
+    res.status(200).json(response);
+  } catch (e) {
+    res.status(500).json({ error: e.toString() });
+  }
+};
+
+const updateStudentProfile = async (req, res) => {
+  try {
+    const { id, ...data } = req.body;
+
+    await teacherSchema.findByIdAndUpdate(id, data);
+
+    const response = await teacherSchema.findById(id);
+
+    res.status(200).json(response);
+  } catch (e) {
+    res.status(500).json({ error: e.toString() });
+  }
+};
+
 module.exports = {
   saveUserData,
   getUserData,
   saveStudentData,
   saveTeacherData,
+  updateTeacherProfile,
+  updateStudentProfile,
 };

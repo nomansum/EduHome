@@ -9,7 +9,7 @@ import 'package:eduhome_project/services/authenticate/controllers/logout_control
 import 'package:eduhome_project/widgets/teacher_subject_salary.dart';
 import 'package:eduhome_project/widgets/update_drop_down_field.dart';
 import 'package:flutter/material.dart';
-import  'package:get/get.dart';
+import 'package:get/get.dart';
 
 class UpdateTeacherProfile extends StatefulWidget {
   UpdateTeacherProfile({super.key});
@@ -25,6 +25,21 @@ class UpdateTeacherProfile extends StatefulWidget {
       minSalary: "30000",
       maxSalary: "50000",
       subjects: "CSE");
+//fullName,
+//gender
+//experience
+//location
+//email
+//phoneNumber
+//occupation
+//instituition
+//subject
+//picturePath
+//teachingSubject
+//rating
+//minSalary
+//maxSalary
+//studentId
 
   @override
   State<UpdateTeacherProfile> createState() => _UpdateTeacherProfileState();
@@ -139,10 +154,11 @@ class _UpdateTeacherProfileState extends State<UpdateTeacherProfile> {
                       IconButton(
                         onPressed: () async {
                           //Carry Out Logout Action
-                         await AuthenticationRepository.instance.logout();
-                          Get.offAll(()=>landingPage());
+                          await AuthenticationRepository.instance.logout();
+                          Get.offAll(() => landingPage());
                         },
-                        icon: Icon(IconData(0xe3b3, fontFamily: 'MaterialIcons')),
+                        icon:
+                            Icon(IconData(0xe3b3, fontFamily: 'MaterialIcons')),
                         color: Colors.grey.shade900,
                       )
                     ],
@@ -303,7 +319,7 @@ class _UpdateTeacherProfileState extends State<UpdateTeacherProfile> {
                       )),
                     ),
                   ),
-    
+
                   SizedBox(
                     height: 5,
                   ),
@@ -339,7 +355,9 @@ class _UpdateTeacherProfileState extends State<UpdateTeacherProfile> {
                     decoration: containerDecoration,
                     child: TextFormField(
                       validator: (value) {
-                        if (value == null || value.isEmpty || value.length < 6) {
+                        if (value == null ||
+                            value.isEmpty ||
+                            value.length < 6) {
                           return "Please Enter Password with length at least 6";
                         }
                         return null;
@@ -371,7 +389,7 @@ class _UpdateTeacherProfileState extends State<UpdateTeacherProfile> {
                   SizedBox(
                     height: 5,
                   ),
-    
+
                   Container(
                     // height: 70,
                     width: 333,
@@ -441,7 +459,7 @@ class _UpdateTeacherProfileState extends State<UpdateTeacherProfile> {
                   SizedBox(
                     height: 5,
                   ),
-    
+
                   Container(
                     width: 333,
                     child: isStudent
@@ -556,7 +574,7 @@ class _UpdateTeacherProfileState extends State<UpdateTeacherProfile> {
                   SizedBox(
                     height: 10,
                   ),
-    
+
                   Container(
                     width: 333,
                     height: 42,

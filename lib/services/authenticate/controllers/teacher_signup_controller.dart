@@ -2,8 +2,11 @@ import 'package:eduhome_project/pages/authenticate/email_verification.dart';
 import 'package:eduhome_project/pages/landing/studentLanding.dart';
 import 'package:eduhome_project/pages/landing/teacherLanding.dart';
 import 'package:eduhome_project/services/authenticate/authentication_repository.dart';
+import 'package:eduhome_project/services/data_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../../models/Teacher.dart';
 
 class TeacherSignUpController extends GetxController {
   static TeacherSignUpController get instance => Get.find();
@@ -23,11 +26,13 @@ class TeacherSignUpController extends GetxController {
 
   final subject = TextEditingController();
 
-  void registerUser(String email, String password) async {
+  void registerUser(String email, String password, Teacher teacherData) async {
     await AuthenticationRepository.instance
         .createUserWithEmailAndPassword(email, password);
 
     AuthenticationRepository.instance.authReload();
+
+    await DataRespository.instance.saveTeacherData(teacherData);
 
 // all data are in these textformfield save Data in MONGODB
 

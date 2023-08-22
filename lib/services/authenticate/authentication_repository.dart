@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:eduhome_project/constants/custom_exception.dart';
+import 'package:eduhome_project/constants/ip.dart';
 import 'package:eduhome_project/pages/authenticate/email_verification.dart';
 import 'package:eduhome_project/pages/authenticate/signInStudent.dart';
 import 'package:eduhome_project/pages/landing/landingPage.dart';
@@ -138,7 +139,7 @@ class AuthenticationRepository extends GetxController {
   }
 
   Future<void> sendUserData(String email, String usertype) async {
-    final url = Uri.parse('http://10.200.31.104:4000/users/saveUserData');
+    final url = Uri.parse('http://${ip}:4000/users/saveUserData');
     final headers = <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     };
@@ -156,7 +157,7 @@ class AuthenticationRepository extends GetxController {
   }
 
   Future<void> getUserData(String email) async {
-    final url = Uri.parse('http://10.200.31.104:4000/users/getUserData');
+    final url = Uri.parse('http://${ip}:4000/users/getUserData');
     final headers = <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     };
