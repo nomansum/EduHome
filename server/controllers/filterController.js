@@ -1,6 +1,7 @@
 const advertisementSchema = require("../models/Advertisement");
+const teacherSchema = require("../models/Teacher");
+
 const fetchTutors = async (req, res) => {
-  const teacherSchema = require("../models/Teacher");
 
 
   try {

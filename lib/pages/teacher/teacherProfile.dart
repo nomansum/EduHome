@@ -59,7 +59,7 @@ class _UpdateTeacherProfileState extends State<UpdateTeacherProfile> {
     if (currentTeacher != null) {
       controller.fullName.text = currentTeacher!.fullName;
       controller.phoneNo.text = currentTeacher!.phoneNumber;
-
+      controller.picturePath.text = currentTeacher!.picturePath!;
       controller.teaches.text = currentTeacher!.teachingSubject;
       controller.location.text = currentTeacher!.location;
       controller.gender.text = currentTeacher!.gender;

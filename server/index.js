@@ -12,8 +12,8 @@ app.use(express.json());
 
 const PORT = 4000;
 
-const DB =
-  "mongodb+srv://albqkx:1921141425@eduhome.eskt5gx.mongodb.net/?retryWrites=true&w=majority";
+const DB = "mongodb+srv://muntasirnahid87:8Re8vAReV4YpCDt8@eduhome.ik65e6g.mongodb.net/?retryWrites=true&w=majority";
+// "mongodb+srv://albqkx:1921141425@eduhome.eskt5gx.mongodb.net/?retryWrites=true&w=majority";
 // "mongodb+srv://muntasirnahid87:8Re8vAReV4YpCDt8@eduhome.ik65e6g.mongodb.net/?retryWrites=true&w=majority";
 //"mongodb+srv://albqkx:1921141425@eduhome.eskt5gx.mongodb.net/?retryWrites=true&w=majority";
 app.get("/", async (req, res) => {

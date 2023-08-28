@@ -18,6 +18,7 @@ class ForgotPasswordBtnWidget extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
+        height: MediaQuery.of(context).size.height - 5,
         padding: const EdgeInsets.all(20.0),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10.0),
@@ -28,26 +29,28 @@ class ForgotPasswordBtnWidget extends StatelessWidget {
             SizedBox(
               width: 10.0,
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  textAlign: TextAlign.start,
-                  style: TextStyle(
-                      fontFamily: "Poppins",
-                      fontWeight: FontWeight.w800,
-                      fontSize: 20),
-                ),
-                Text(
-                  subTitle,
-                  textAlign: TextAlign.start,
-                  style: TextStyle(
-                      fontWeight: FontWeight.w300,
-                      fontFamily: "Poppins",
-                      fontSize: 17),
-                )
-              ],
+            SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                        fontFamily: "Poppins",
+                        fontWeight: FontWeight.w800,
+                        fontSize: 20),
+                  ),
+                  Text(
+                    subTitle,
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                        fontWeight: FontWeight.w300,
+                        fontFamily: "Poppins",
+                        fontSize: 17),
+                  )
+                ],
+              ),
             )
           ],
         ),
