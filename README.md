@@ -1,7 +1,8 @@
 <div align="center">
   <h2>EduHOME</h2>
-  <img src="https://github.com/MuntasirNahid/EduHOME/assets/69505101/8112c21f-3ab3-42e4-b3a1-4be58ec6a5f0" alt="EduHomeLanding" width="50%" height="40%">
+  <img src="https://github.com/MuntasirNahid/EduHOME/assets/69505101/35756655-eb09-4810-9a35-f032d3cde6cb" alt="EduHomeLanding" width="50%" height="40%">
 </div>
+
 
 ## About The Project
 
@@ -22,12 +23,13 @@ EduHOME functions as an educational hub, enabling the seamless connection betwee
 
 # DataBase Schema:
 
-<img src="https://github.com/MuntasirNahid/EduHOME/assets/69505101/2a51c810-9860-4804-b70b-c071f9a54124" alt="DataBaseSchema" width="80%" height="50%">
+<img src="https://github.com/MuntasirNahid/EduHOME/assets/69505101/885cd9c3-0205-4be3-a3bb-7399e52beeec" alt="DataBaseSchema" width="80%" height="50%">
+
 
 # Video Presentation :
 
 
-<a href="https://youtu.be/o91aPjKT2c0">
+<a href="https://youtu.be/Pb7q6Jh_bK8?si=I0G5un8239d45XqX">
 Youtube
 </a>
 
@@ -68,17 +70,8 @@ Then run the following commands to run your app:
 
 ## Honourable Supervisor
 
-- <a href = https://www.sust.edu/d/cse/faculty-profile-detail/52/4>Ayesha Tasmin </a>
+- <a href = https://www.sust.edu/d/cse/faculty-profile-detail/52/4>Ayesha Tasnim </a>
 
   - **Assistant Professor**
 
   
-
-    Department of Computer Science and Engineering,
-    Shahjalal University of Science and Technology
-    ,Sylhet, Bangladesh.
-
-- <a href=https://www.linkedin.com/in/ershadin/> Ershadur Rahman Talukder </a>
-  - **Co-Founder** at <a href = https://inverseai.com>Inverse.AI</a>
-
-<p align="right">(<a href="#top">back to top</a>)</p>
