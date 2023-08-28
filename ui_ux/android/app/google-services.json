@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "74951298358",
+    "project_id": "eduhome-34bf4",
+    "storage_bucket": "eduhome-34bf4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:74951298358:android:56fe54577d9af3b9b0f797",
+        "android_client_info": {
+          "package_name": "com.example.ui_ux"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "74951298358-a89mn90kr5ev1s1bg15cgd15196nc7gr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBE-RqR_9XzJdOlz4019B63kjpOu9GadmM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "74951298358-a89mn90kr5ev1s1bg15cgd15196nc7gr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
